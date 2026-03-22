@@ -1,0 +1,323 @@
+/**
+ * Simple Announcement Bar — Admin Styles
+ * Version: 2.0.0
+ */
+
+/* =========================================
+   Layout
+   ========================================= */
+.sab-admin-wrap h1 {
+    margin-bottom: 20px;
+}
+
+.sab-admin-container {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    max-width: 1300px;
+}
+
+/* =========================================
+   Sidebar Navigation
+   ========================================= */
+.sab-admin-sidebar {
+    width: 200px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 32px;
+}
+
+.sab-tabs {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.sab-tabs li {
+    padding: 12px 16px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    color: #3c434a;
+    border-bottom: 1px solid #f0f0f1;
+    transition: background 0.15s ease, color 0.15s ease;
+    user-select: none;
+}
+
+.sab-tabs li:last-child {
+    border-bottom: none;
+}
+
+.sab-tabs li:hover {
+    background: #f6f7f7;
+    color: #0073aa;
+}
+
+.sab-tabs li.active {
+    background: #0073aa;
+    color: #fff;
+    font-weight: 600;
+}
+
+.sab-save-panel {
+    margin-top: 16px;
+}
+
+.sab-save-panel .button-hero {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+}
+
+/* =========================================
+   Main Content
+   ========================================= */
+.sab-admin-main {
+    flex: 1;
+    min-width: 0;
+}
+
+/* =========================================
+   Tab Content
+   ========================================= */
+.sab-tab-content {
+    display: none;
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 6px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.sab-tab-content.active {
+    display: block;
+}
+
+.sab-tab-content h2 {
+    margin-top: 0;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f0f0f1;
+    font-size: 16px;
+    color: #1d2327;
+}
+
+.sab-tab-content h3 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #646970;
+    margin: 24px 0 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #f0f0f1;
+}
+
+.sab-tab-content .form-table th {
+    padding: 10px 20px 10px 0;
+    font-size: 13px;
+    vertical-align: middle;
+    width: 220px;
+}
+
+.sab-tab-content .form-table td {
+    padding: 8px 0;
+    vertical-align: middle;
+}
+
+.sab-tab-content .form-table .description {
+    margin-top: 4px;
+    font-size: 12px;
+    color: #646970;
+}
+
+/* =========================================
+   Toggle Switch
+   ========================================= */
+.sab-toggle {
+    position: relative;
+    display: inline-block;
+    width: 42px;
+    height: 22px;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+.sab-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+
+.sab-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #c3c4c7;
+    border-radius: 22px;
+    transition: background 0.25s ease;
+}
+
+.sab-slider::before {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: 3px;
+    bottom: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.25s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.sab-toggle input:checked + .sab-slider {
+    background: #0073aa;
+}
+
+.sab-toggle input:checked + .sab-slider::before {
+    transform: translateX(20px);
+}
+
+/* =========================================
+   Range Sliders
+   ========================================= */
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 200px;
+    height: 5px;
+    background: #c3c4c7;
+    border-radius: 5px;
+    outline: none;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #0073aa;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #0073aa;
+    cursor: pointer;
+    border: none;
+}
+
+/* =========================================
+   Color Pickers
+   ========================================= */
+.wp-picker-container .wp-color-result.button {
+    height: 32px;
+    border-radius: 4px;
+}
+
+/* =========================================
+   Conditional Rows
+   ========================================= */
+.sab-conditional {
+    display: none;
+}
+
+.sab-conditional.sab-visible {
+    display: table-row;
+}
+
+/* =========================================
+   Live Preview Panel
+   ========================================= */
+.sab-preview-panel {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.sab-preview-panel h3 {
+    margin: 0 0 14px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #646970;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f0f0f1;
+}
+
+.sab-preview-container {
+    background: #f6f7f7;
+    border: 1px dashed #c3c4c7;
+    border-radius: 4px;
+    min-height: 80px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Preview bar — mirrors the real bar but confined to the preview box */
+.sab-preview-container .sab-bar {
+    position: relative !important;
+    transform: none !important;
+    opacity: 1 !important;
+    display: flex !important;
+    top: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
+    width: 100% !important;
+    min-height: 48px;
+    writing-mode: horizontal-tb !important;
+}
+
+/* Override vertical positioning in preview */
+.sab-preview-container .sab-pos-left,
+.sab-preview-container .sab-pos-right {
+    flex-direction: row !important;
+    width: 100% !important;
+    height: auto !important;
+    writing-mode: horizontal-tb !important;
+}
+
+.sab-preview-container .sab-content {
+    flex-direction: row !important;
+    writing-mode: horizontal-tb !important;
+}
+
+/* =========================================
+   Responsive
+   ========================================= */
+@media screen and (max-width: 960px) {
+    .sab-admin-container {
+        flex-direction: column;
+    }
+    
+    .sab-admin-sidebar {
+        width: 100%;
+        position: static;
+    }
+    
+    .sab-tabs {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    
+    .sab-tabs li {
+        border-bottom: none;
+        border-right: 1px solid #f0f0f1;
+    }
+}
