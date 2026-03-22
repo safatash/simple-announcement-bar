@@ -1,5 +1,5 @@
 === Simple Announcement Bar ===
-Contributors: manus-ai
+Contributors: Safa Tash
 Tags: announcement, notification, banner, sticky bar, alert, countdown, scheduling
 Requires at least: 5.0
 Tested up to: 6.4
