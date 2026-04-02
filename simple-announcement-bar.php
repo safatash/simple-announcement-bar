@@ -3,7 +3,7 @@
  * Plugin Name: Simple Announcement Bar
  * Plugin URI:  https://wordpress.org/plugins/simple-announcement-bar/
  * Description: A lightweight, customizable announcement bar with advanced positioning, scheduling, and targeting.
- * Version:     2.1.0
+ * Version:     2.2.0
  * Author:      Safa Tash (NOVA Advertising)
  * Author URI:  https://www.novaadvertising.com
  * License:     GPL-2.0-or-later
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Define plugin constants
 define( 'SIMPANBAR_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SIMPANBAR_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-define( 'SIMPANBAR_VERSION', '2.1.0' );
+define( 'SIMPANBAR_VERSION', '2.2.0' );
 
 register_uninstall_hook( __FILE__, 'simpanbar_uninstall' );
 function simpanbar_uninstall() {
@@ -42,6 +42,7 @@ function simpanbar_get_default_settings() {
         'message' => 'Welcome to our website! Check out our latest offers.',
         'btn_text' => 'Learn More',
         'btn_url' => '#',
+        'btn_new_tab' => 0,
         
         // Visibility
         'show_on' => 'entire_site', // entire_site, homepage, posts, pages, specific
@@ -323,7 +324,7 @@ function simpanbar_render_bar() {
             </div>
 
             <?php if ( ! empty( $btn_text ) && ! empty( $btn_url ) ) : ?>
-                <a href="<?php echo esc_url( $btn_url ); ?>" class="simpanbar-button">
+                <a href="<?php echo esc_url( $btn_url ); ?>" class="simpanbar-button"<?php if ( ! empty( $settings['btn_new_tab'] ) ) : ?> target="_blank" rel="noopener noreferrer"<?php endif; ?>>
                     <?php echo esc_html( $btn_text ); ?>
                 </a>
             <?php endif; ?>

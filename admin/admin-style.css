@@ -275,6 +275,8 @@ input[type="range"]::-moz-range-thumb {
     transform: none !important;
     opacity: 1 !important;
     display: flex !important;
+    visibility: visible !important;
+    pointer-events: all !important;
     top: auto !important;
     bottom: auto !important;
     left: auto !important;

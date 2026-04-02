@@ -56,6 +56,7 @@ function simpanbar_sanitize_settings( $input ) {
     if ( isset( $input['message'] ) ) $sanitized['message'] = wp_kses_post( $input['message'] );
     if ( isset( $input['btn_text'] ) ) $sanitized['btn_text'] = sanitize_text_field( $input['btn_text'] );
     if ( isset( $input['btn_url'] ) ) $sanitized['btn_url'] = esc_url_raw( $input['btn_url'] );
+    $sanitized['btn_new_tab'] = isset( $input['btn_new_tab'] ) ? 1 : 0;
     
     // Visibility
     if ( isset( $input['show_on'] ) ) $sanitized['show_on'] = sanitize_text_field( $input['show_on'] );
@@ -201,6 +202,16 @@ function simpanbar_options_page() {
                                     <input type="url" name="simpanbar_settings[btn_url]" id="simpanbar_btn_url" value="<?php echo esc_url( $settings['btn_url'] ); ?>" class="regular-text">
                                 </td>
                             </tr>
+                            <tr>
+                                <th scope="row">Open in New Window</th>
+                                <td>
+                                    <label class="simpanbar-toggle">
+                                        <input type="checkbox" name="simpanbar_settings[btn_new_tab]" id="simpanbar_btn_new_tab" value="1" <?php checked( 1, $settings['btn_new_tab'] ); ?>>
+                                        <span class="simpanbar-slider"></span>
+                                    </label>
+                                    <p class="description">Opens the button link in a new browser tab.</p>
+                                </td>
+                            </tr>
                         </table>
                     </div>
 
@@ -220,7 +231,7 @@ function simpanbar_options_page() {
                                     </select>
                                 </td>
                             </tr>
-                            <tr class="simpanbar-conditional" data-show-if="sab_show_on" data-show-val="specific">
+                            <tr class="simpanbar-conditional" data-show-if="simpanbar_show_on" data-show-val="specific">
                                 <th scope="row">Include Specific IDs</th>
                                 <td>
                                     <input type="text" name="simpanbar_settings[specific_ids]" value="<?php echo esc_attr( $settings['specific_ids'] ); ?>" class="regular-text">
@@ -468,7 +479,7 @@ function simpanbar_options_page() {
                                     </label>
                                 </td>
                             </tr>
-                            <tr class="simpanbar-conditional" data-show-if="sab_show_close_btn" data-show-val="checked">
+                            <tr class="simpanbar-conditional" data-show-if="simpanbar_show_close_btn" data-show-val="checked">
                                 <th scope="row">Close Button Text</th>
                                 <td><input type="text" name="simpanbar_settings[close_text]" id="simpanbar_close_text" value="<?php echo esc_attr( $settings['close_text'] ); ?>" class="small-text"></td>
                             </tr>
@@ -494,7 +505,7 @@ function simpanbar_options_page() {
                                     <p class="description">Allows users to reopen the bar after closing it.</p>
                                 </td>
                             </tr>
-                            <tr class="simpanbar-conditional" data-show-if="sab_show_open_btn" data-show-val="checked">
+                            <tr class="simpanbar-conditional" data-show-if="simpanbar_show_open_btn" data-show-val="checked">
                                 <th scope="row">Open Button Text</th>
                                 <td><input type="text" name="simpanbar_settings[open_text]" id="simpanbar_open_text" value="<?php echo esc_attr( $settings['open_text'] ); ?>" class="small-text"></td>
                             </tr>
@@ -516,13 +527,13 @@ function simpanbar_options_page() {
                                     </label>
                                 </td>
                             </tr>
-                            <tr class="simpanbar-conditional" data-show-if="sab_enable_schedule" data-show-val="checked">
+                            <tr class="simpanbar-conditional" data-show-if="simpanbar_enable_schedule" data-show-val="checked">
                                 <th scope="row">Start Date/Time</th>
                                 <td>
                                     <input type="datetime-local" name="simpanbar_settings[start_date]" value="<?php echo esc_attr( $settings['start_date'] ); ?>">
                                 </td>
                             </tr>
-                            <tr class="simpanbar-conditional" data-show-if="sab_enable_schedule" data-show-val="checked">
+                            <tr class="simpanbar-conditional" data-show-if="simpanbar_enable_schedule" data-show-val="checked">
                                 <th scope="row">End Date/Time</th>
                                 <td>
                                     <input type="datetime-local" name="simpanbar_settings[end_date]" value="<?php echo esc_attr( $settings['end_date'] ); ?>">
@@ -541,13 +552,13 @@ function simpanbar_options_page() {
                                     </label>
                                 </td>
                             </tr>
-                            <tr class="simpanbar-conditional" data-show-if="sab_enable_countdown" data-show-val="checked">
+                            <tr class="simpanbar-conditional" data-show-if="simpanbar_enable_countdown" data-show-val="checked">
                                 <th scope="row">Target Date/Time</th>
                                 <td>
                                     <input type="datetime-local" name="simpanbar_settings[countdown_target]" id="simpanbar_countdown_target" value="<?php echo esc_attr( $settings['countdown_target'] ); ?>">
                                 </td>
                             </tr>
-                            <tr class="simpanbar-conditional" data-show-if="sab_enable_countdown" data-show-val="checked">
+                            <tr class="simpanbar-conditional" data-show-if="simpanbar_enable_countdown" data-show-val="checked">
                                 <th scope="row">Auto-hide when ended</th>
                                 <td>
                                     <label class="simpanbar-toggle">

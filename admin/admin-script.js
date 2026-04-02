@@ -50,14 +50,18 @@
     // =========================================
     function initColorPickers() {
         $( '.simpanbar-color-picker' ).wpColorPicker( {
-            change: function () {
-                // Debounce preview update
+            change: function ( event, ui ) {
+                // wpColorPicker fires 'change' before writing back to the input,
+                // so we write the hex value ourselves then update the preview
+                var $input = $( this );
+                var hex = ui && ui.color ? ui.color.toString() : $input.val();
+                $input.val( hex );
                 clearTimeout( window.sabPreviewTimer );
-                window.sabPreviewTimer = setTimeout( updatePreview, 100 );
+                window.sabPreviewTimer = setTimeout( updatePreview, 50 );
             },
             clear: function () {
                 clearTimeout( window.sabPreviewTimer );
-                window.sabPreviewTimer = setTimeout( updatePreview, 100 );
+                window.sabPreviewTimer = setTimeout( updatePreview, 50 );
             }
         } );
     }
@@ -107,10 +111,10 @@
         var $el = $( '[name="simpanbar_settings[' + name + ']"]' );
         if ( ! $el.length ) return '';
         if ( $el.is( ':checkbox' ) ) return $el.is( ':checked' ) ? '1' : '0';
-        // For color pickers, read the wpColorPicker iris value if available
-        if ( $el.hasClass( 'simpanbar-color-picker' ) || $el.hasClass( 'wp-color-picker' ) ) {
-            var $swatch = $el.closest( '.wp-picker-container' ).find( '.wp-color-picker' );
-            if ( $swatch.length ) return $swatch.val() || $el.val() || '';
+        // For wpColorPicker fields, the hidden input holds the current hex value
+        if ( $el.hasClass( 'simpanbar-color-picker' ) ) {
+            // wpColorPicker stores the value back in the original input
+            return $el.val() || '';
         }
         return $el.val() || '';
     }
