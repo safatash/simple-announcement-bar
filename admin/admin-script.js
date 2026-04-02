@@ -107,6 +107,11 @@
         var $el = $( '[name="simpanbar_settings[' + name + ']"]' );
         if ( ! $el.length ) return '';
         if ( $el.is( ':checkbox' ) ) return $el.is( ':checked' ) ? '1' : '0';
+        // For color pickers, read the wpColorPicker iris value if available
+        if ( $el.hasClass( 'simpanbar-color-picker' ) || $el.hasClass( 'wp-color-picker' ) ) {
+            var $swatch = $el.closest( '.wp-picker-container' ).find( '.wp-color-picker' );
+            if ( $swatch.length ) return $swatch.val() || $el.val() || '';
+        }
         return $el.val() || '';
     }
 
@@ -187,7 +192,7 @@
         if ( position !== 'top' && position !== 'bottom' ) position = 'top';
 
         // Build classes
-        var classes = 'simpanbar-bar sab-pos-' + position;
+        var classes = 'simpanbar-bar simpanbar-pos-' + position + ' simpanbar-visible';
         if ( contentWidth === 'full' ) classes += ' simpanbar-full-width';
 
         // Build countdown HTML

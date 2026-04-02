@@ -6,7 +6,8 @@
 /* =========================================
    CSS Custom Properties (set via PHP inline style)
    ========================================= */
-#simpanbar-announcement-bar {
+#simpanbar-announcement-bar,
+.simpanbar-bar {
     --simpanbar-bg-color: #000000;
     --simpanbar-bg-opacity: 1;
     --simpanbar-text-color: #ffffff;
@@ -36,7 +37,8 @@
 /* =========================================
    Base Bar
    ========================================= */
-#simpanbar-announcement-bar {
+#simpanbar-announcement-bar,
+.simpanbar-bar {
     width: 100%;
     box-sizing: border-box;
     display: flex;
@@ -58,7 +60,8 @@
     pointer-events: none;
 }
 
-#simpanbar-announcement-bar.simpanbar-visible {
+#simpanbar-announcement-bar.simpanbar-visible,
+.simpanbar-bar.simpanbar-visible {
     visibility: visible;
     pointer-events: all;
 }
@@ -79,14 +82,16 @@
 /* =========================================
    Sticky (fixed) bar
    ========================================= */
-#simpanbar-announcement-bar.simpanbar-sticky.simpanbar-pos-top {
+#simpanbar-announcement-bar.simpanbar-sticky.simpanbar-pos-top,
+.simpanbar-bar.simpanbar-sticky.simpanbar-pos-top {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
 }
 
-#simpanbar-announcement-bar.simpanbar-sticky.simpanbar-pos-bottom {
+#simpanbar-announcement-bar.simpanbar-sticky.simpanbar-pos-bottom,
+.simpanbar-bar.simpanbar-sticky.simpanbar-pos-bottom {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -100,40 +105,47 @@
    ========================================= */
 
 /* --- Slide (default) --- */
-#simpanbar-announcement-bar.simpanbar-anim-slide.simpanbar-pos-top {
+#simpanbar-announcement-bar.simpanbar-anim-slide.simpanbar-pos-top,
+.simpanbar-bar.simpanbar-anim-slide.simpanbar-pos-top {
     transform: translateY(-100%);
     transition: transform 0.4s ease, opacity 0.4s ease, visibility 0s linear 0.4s;
     opacity: 0;
 }
-#simpanbar-announcement-bar.simpanbar-anim-slide.simpanbar-pos-bottom {
+#simpanbar-announcement-bar.simpanbar-anim-slide.simpanbar-pos-bottom,
+.simpanbar-bar.simpanbar-anim-slide.simpanbar-pos-bottom {
     transform: translateY(100%);
     transition: transform 0.4s ease, opacity 0.4s ease, visibility 0s linear 0.4s;
     opacity: 0;
 }
 
-#simpanbar-announcement-bar.simpanbar-anim-slide.simpanbar-visible {
+#simpanbar-announcement-bar.simpanbar-anim-slide.simpanbar-visible,
+.simpanbar-bar.simpanbar-anim-slide.simpanbar-visible {
     transform: translate(0, 0);
     opacity: 1;
     transition: transform 0.4s ease, opacity 0.4s ease, visibility 0s linear 0s;
 }
 
 /* --- Fade --- */
-#simpanbar-announcement-bar.simpanbar-anim-fade {
+#simpanbar-announcement-bar.simpanbar-anim-fade,
+.simpanbar-bar.simpanbar-anim-fade {
     opacity: 0;
     transition: opacity 0.4s ease, visibility 0s linear 0.4s;
 }
-#simpanbar-announcement-bar.simpanbar-anim-fade.simpanbar-visible {
+#simpanbar-announcement-bar.simpanbar-anim-fade.simpanbar-visible,
+.simpanbar-bar.simpanbar-anim-fade.simpanbar-visible {
     opacity: 1;
     transition: opacity 0.4s ease, visibility 0s linear 0s;
 }
 
 /* --- None --- */
-#simpanbar-announcement-bar.simpanbar-anim-none {
+#simpanbar-announcement-bar.simpanbar-anim-none,
+.simpanbar-bar.simpanbar-anim-none {
     transition: none;
 }
 
 /* Hiding state (for dismiss animation) */
-#simpanbar-announcement-bar.simpanbar-hiding {
+#simpanbar-announcement-bar.simpanbar-hiding,
+.simpanbar-bar.simpanbar-hiding {
     pointer-events: none;
 }
 
@@ -152,7 +164,8 @@
     z-index: 1;
 }
 
-#simpanbar-announcement-bar.simpanbar-full-width .simpanbar-content {
+#simpanbar-announcement-bar.simpanbar-full-width .simpanbar-content,
+.simpanbar-bar.simpanbar-full-width .simpanbar-content {
     max-width: 100%;
 }
 
@@ -332,7 +345,8 @@ body.simpanbar-sticky-bottom {
    Mobile Responsive
    ========================================= */
 @media (max-width: 768px) {
-    #simpanbar-announcement-bar {
+    #simpanbar-announcement-bar,
+    .simpanbar-bar {
         font-size: 13px;
     }
 
