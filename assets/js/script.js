@@ -10,7 +10,7 @@
     // =========================================
     // Settings & State
     // =========================================
-    var S = ( typeof sabSettings !== 'undefined' ) ? sabSettings : {};
+    var S = ( typeof simpanbarSettings !== 'undefined' ) ? simpanbarSettings : {};
 
     var cfg = {
         position:           S.position           || 'top',
@@ -29,8 +29,8 @@
         serverTime:         parseInt( S.serverTime )         || Date.now(),
     };
 
-    var SAB_DISMISSED_KEY = 'sab_dismissed';
-    var SAB_SHOW_COUNT_KEY = 'sab_show_count';
+    var SAB_DISMISSED_KEY = 'simpanbar_dismissed';
+    var SAB_SHOW_COUNT_KEY = 'simpanbar_show_count';
 
     var bar, openBtn, countdownTimer;
     var isBarVisible = false;
@@ -91,8 +91,8 @@
 
         isBarVisible = true;
         bar.setAttribute( 'aria-hidden', 'false' );
-        bar.classList.remove( 'sab-hiding' );
-        bar.classList.add( 'sab-visible' );
+        bar.classList.remove( 'simpanbar-hiding' );
+        bar.classList.add( 'simpanbar-visible' );
 
         if ( cfg.isSticky ) {
             applyBodyPadding();
@@ -115,8 +115,8 @@
 
         isBarVisible = false;
         bar.setAttribute( 'aria-hidden', 'true' );
-        bar.classList.remove( 'sab-visible' );
-        bar.classList.add( 'sab-hiding' );
+        bar.classList.remove( 'simpanbar-visible' );
+        bar.classList.add( 'simpanbar-hiding' );
 
         if ( persist ) {
             setDismissed();
@@ -146,19 +146,19 @@
     // =========================================
     function applyBodyPadding() {
         var h = bar.offsetHeight;
-        document.documentElement.style.setProperty( '--sab-bar-height', h + 'px' );
-        document.body.classList.add( 'sab-sticky-' + cfg.position );
+        document.documentElement.style.setProperty( '--simpanbar-bar-height', h + 'px' );
+        document.body.classList.add( 'simpanbar-sticky-' + cfg.position );
         window.addEventListener( 'resize', recalcBodyPadding );
     }
 
     function recalcBodyPadding() {
         if ( ! isBarVisible || ! bar ) return;
-        document.documentElement.style.setProperty( '--sab-bar-height', bar.offsetHeight + 'px' );
+        document.documentElement.style.setProperty( '--simpanbar-bar-height', bar.offsetHeight + 'px' );
     }
 
     function removeBodyPadding() {
-        document.body.classList.remove( 'sab-sticky-top', 'sab-sticky-bottom' );
-        document.documentElement.style.removeProperty( '--sab-bar-height' );
+        document.body.classList.remove( 'simpanbar-sticky-top', 'simpanbar-sticky-bottom' );
+        document.documentElement.style.removeProperty( '--simpanbar-bar-height' );
         window.removeEventListener( 'resize', recalcBodyPadding );
     }
 
@@ -188,8 +188,8 @@
             if ( currentScrollY > lastScrollY && isBarVisible ) {
                 // Scrolling down — hide without persisting
                 isBarVisible = false;
-                bar.classList.remove( 'sab-visible' );
-                bar.classList.add( 'sab-hiding' );
+                bar.classList.remove( 'simpanbar-visible' );
+                bar.classList.add( 'simpanbar-hiding' );
                 removeBodyPadding();
             } else if ( currentScrollY < lastScrollY && ! isBarVisible && ! isDismissed() ) {
                 // Scrolling up — show again
@@ -215,10 +215,10 @@
         var targetTime = new Date( cfg.countdownTarget ).getTime();
         if ( isNaN( targetTime ) ) return;
 
-        var elD = document.getElementById( 'sab-cd-d' );
-        var elH = document.getElementById( 'sab-cd-h' );
-        var elM = document.getElementById( 'sab-cd-m' );
-        var elS = document.getElementById( 'sab-cd-s' );
+        var elD = document.getElementById( 'simpanbar-cd-d' );
+        var elH = document.getElementById( 'simpanbar-cd-h' );
+        var elM = document.getElementById( 'simpanbar-cd-m' );
+        var elS = document.getElementById( 'simpanbar-cd-s' );
 
         if ( ! elD || ! elH || ! elM || ! elS ) return;
 
@@ -261,8 +261,8 @@
     // Main Init
     // =========================================
     function init() {
-        bar = document.getElementById( 'sab-announcement-bar' );
-        openBtn = document.getElementById( 'sab-open-btn' );
+        bar = document.getElementById( 'simpanbar-announcement-bar' );
+        openBtn = document.getElementById( 'simpanbar-open-btn' );
 
         if ( ! bar ) return;
 
@@ -286,7 +286,7 @@
         }
 
         // Close button
-        var closeBtn = document.getElementById( 'sab-close-btn' );
+        var closeBtn = document.getElementById( 'simpanbar-close-btn' );
         if ( closeBtn ) {
             closeBtn.addEventListener( 'click', function () {
                 hideBar( true ); // Persist dismissal in localStorage

@@ -6,72 +6,72 @@
 /* =========================================
    CSS Custom Properties (set via PHP inline style)
    ========================================= */
-#sab-announcement-bar {
-    --sab-bg-color: #000000;
-    --sab-bg-opacity: 1;
-    --sab-text-color: #ffffff;
-    --sab-z-index: 99999;
-    --sab-padding: 10px 50px 10px 16px;
-    --sab-margin: 0;
-    --sab-spacing: 15px;
-    --sab-border-width: 0px;
-    --sab-border-style: solid;
-    --sab-border-color: transparent;
-    --sab-btn-bg: #ffffff;
-    --sab-btn-text: #000000;
-    --sab-btn-hover-bg: #eeeeee;
-    --sab-btn-hover-text: #000000;
-    --sab-btn-padding: 6px 16px;
-    --sab-btn-radius: 4px;
-    --sab-close-bg: transparent;
-    --sab-close-text: #ffffff;
-    --sab-close-hover-bg: rgba(255,255,255,0.1);
-    --sab-close-hover-text: #ffffff;
-    --sab-open-bg: #000000;
-    --sab-open-text: #ffffff;
-    --sab-open-hover-bg: #333333;
-    --sab-open-hover-text: #ffffff;
+#simpanbar-announcement-bar {
+    --simpanbar-bg-color: #000000;
+    --simpanbar-bg-opacity: 1;
+    --simpanbar-text-color: #ffffff;
+    --simpanbar-z-index: 99999;
+    --simpanbar-padding: 10px 50px 10px 16px;
+    --simpanbar-margin: 0;
+    --simpanbar-spacing: 15px;
+    --simpanbar-border-width: 0px;
+    --simpanbar-border-style: solid;
+    --simpanbar-border-color: transparent;
+    --simpanbar-btn-bg: #ffffff;
+    --simpanbar-btn-text: #000000;
+    --simpanbar-btn-hover-bg: #eeeeee;
+    --simpanbar-btn-hover-text: #000000;
+    --simpanbar-btn-padding: 6px 16px;
+    --simpanbar-btn-radius: 4px;
+    --simpanbar-close-bg: transparent;
+    --simpanbar-close-text: #ffffff;
+    --simpanbar-close-hover-bg: rgba(255,255,255,0.1);
+    --simpanbar-close-hover-text: #ffffff;
+    --simpanbar-open-bg: #000000;
+    --simpanbar-open-text: #ffffff;
+    --simpanbar-open-hover-bg: #333333;
+    --simpanbar-open-hover-text: #ffffff;
 }
 
 /* =========================================
    Base Bar
    ========================================= */
-#sab-announcement-bar {
+#simpanbar-announcement-bar {
     width: 100%;
     box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--sab-padding);
-    margin: var(--sab-margin);
+    padding: var(--simpanbar-padding);
+    margin: var(--simpanbar-margin);
     font-family: inherit;
     font-size: 14px;
     line-height: 1.5;
-    color: var(--sab-text-color);
-    z-index: var(--sab-z-index);
-    border-width: var(--sab-border-width);
-    border-style: var(--sab-border-style);
-    border-color: var(--sab-border-color);
+    color: var(--simpanbar-text-color);
+    z-index: var(--simpanbar-z-index);
+    border-width: var(--simpanbar-border-width);
+    border-style: var(--simpanbar-border-style);
+    border-color: var(--simpanbar-border-color);
     position: relative;
     /* Hidden by default — JS reveals it */
     visibility: hidden;
     pointer-events: none;
 }
 
-#sab-announcement-bar.sab-visible {
+#simpanbar-announcement-bar.simpanbar-visible {
     visibility: visible;
     pointer-events: all;
 }
 
 /* Background overlay (handles opacity without affecting text) */
-.sab-bg-overlay {
+.simpanbar-bg-overlay {
     position: absolute;
     inset: 0;
-    background-color: var(--sab-bg-color);
-    background-image: var(--sab-bg-image, none);
+    background-color: var(--simpanbar-bg-color);
+    background-image: var(--simpanbar-bg-image, none);
     background-size: cover;
     background-position: center;
-    opacity: var(--sab-bg-opacity);
+    opacity: var(--simpanbar-bg-opacity);
     z-index: 0;
     pointer-events: none;
 }
@@ -79,14 +79,14 @@
 /* =========================================
    Sticky (fixed) bar
    ========================================= */
-#sab-announcement-bar.sab-sticky.sab-pos-top {
+#simpanbar-announcement-bar.simpanbar-sticky.simpanbar-pos-top {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
 }
 
-#sab-announcement-bar.sab-sticky.sab-pos-bottom {
+#simpanbar-announcement-bar.simpanbar-sticky.simpanbar-pos-bottom {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -100,59 +100,59 @@
    ========================================= */
 
 /* --- Slide (default) --- */
-#sab-announcement-bar.sab-anim-slide.sab-pos-top {
+#simpanbar-announcement-bar.simpanbar-anim-slide.simpanbar-pos-top {
     transform: translateY(-100%);
     transition: transform 0.4s ease, opacity 0.4s ease, visibility 0s linear 0.4s;
     opacity: 0;
 }
-#sab-announcement-bar.sab-anim-slide.sab-pos-bottom {
+#simpanbar-announcement-bar.simpanbar-anim-slide.simpanbar-pos-bottom {
     transform: translateY(100%);
     transition: transform 0.4s ease, opacity 0.4s ease, visibility 0s linear 0.4s;
     opacity: 0;
 }
 
-#sab-announcement-bar.sab-anim-slide.sab-visible {
+#simpanbar-announcement-bar.simpanbar-anim-slide.simpanbar-visible {
     transform: translate(0, 0);
     opacity: 1;
     transition: transform 0.4s ease, opacity 0.4s ease, visibility 0s linear 0s;
 }
 
 /* --- Fade --- */
-#sab-announcement-bar.sab-anim-fade {
+#simpanbar-announcement-bar.simpanbar-anim-fade {
     opacity: 0;
     transition: opacity 0.4s ease, visibility 0s linear 0.4s;
 }
-#sab-announcement-bar.sab-anim-fade.sab-visible {
+#simpanbar-announcement-bar.simpanbar-anim-fade.simpanbar-visible {
     opacity: 1;
     transition: opacity 0.4s ease, visibility 0s linear 0s;
 }
 
 /* --- None --- */
-#sab-announcement-bar.sab-anim-none {
+#simpanbar-announcement-bar.simpanbar-anim-none {
     transition: none;
 }
 
 /* Hiding state (for dismiss animation) */
-#sab-announcement-bar.sab-hiding {
+#simpanbar-announcement-bar.simpanbar-hiding {
     pointer-events: none;
 }
 
 /* =========================================
    Content Layout
    ========================================= */
-.sab-content {
+.simpanbar-content {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    gap: var(--sab-spacing);
+    gap: var(--simpanbar-spacing);
     width: 100%;
     max-width: 1200px;
     position: relative;
     z-index: 1;
 }
 
-#sab-announcement-bar.sab-full-width .sab-content {
+#simpanbar-announcement-bar.simpanbar-full-width .simpanbar-content {
     max-width: 100%;
 }
 
@@ -161,78 +161,78 @@
 /* =========================================
    Message
    ========================================= */
-.sab-message-wrap {
+.simpanbar-message-wrap {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     gap: 10px;
 }
 
-.sab-message {
+.simpanbar-message {
     flex: 1 1 auto;
     text-align: center;
 }
 
-.sab-message a {
+.simpanbar-message a {
     color: inherit;
     text-decoration: underline;
 }
 
-.sab-message strong,
-.sab-message b {
+.simpanbar-message strong,
+.simpanbar-message b {
     font-weight: 700;
 }
 
 /* =========================================
    CTA Button
    ========================================= */
-.sab-button {
+.simpanbar-button {
     display: inline-block;
-    padding: var(--sab-btn-padding);
-    border-radius: var(--sab-btn-radius);
+    padding: var(--simpanbar-btn-padding);
+    border-radius: var(--simpanbar-btn-radius);
     font-size: 13px;
     font-weight: 600;
     text-decoration: none;
     white-space: nowrap;
     border: none;
     cursor: pointer;
-    background-color: var(--sab-btn-bg);
-    color: var(--sab-btn-text);
+    background-color: var(--simpanbar-btn-bg);
+    color: var(--simpanbar-btn-text);
     transition: background-color 0.2s ease, color 0.2s ease;
     flex-shrink: 0;
     position: relative;
     z-index: 1;
 }
 
-.sab-button:hover {
-    background-color: var(--sab-btn-hover-bg);
-    color: var(--sab-btn-hover-text);
+.simpanbar-button:hover {
+    background-color: var(--simpanbar-btn-hover-bg);
+    color: var(--simpanbar-btn-hover-text);
     text-decoration: none;
 }
 
 /* =========================================
    Close Button
    ========================================= */
-.sab-close {
+.simpanbar-close {
     position: absolute;
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
-    background: var(--sab-close-bg);
+    background: var(--simpanbar-close-bg);
     border: none;
     font-size: 20px;
     line-height: 1;
     cursor: pointer;
     padding: 4px 8px;
-    color: var(--sab-close-text);
+    color: var(--simpanbar-close-text);
     transition: background-color 0.2s ease, color 0.2s ease;
     border-radius: 3px;
     z-index: 2;
 }
 
-.sab-close:hover {
-    background-color: var(--sab-close-hover-bg);
-    color: var(--sab-close-hover-text);
+.simpanbar-close:hover {
+    background-color: var(--simpanbar-close-hover-bg);
+    color: var(--simpanbar-close-hover-text);
 }
 
 
@@ -240,34 +240,34 @@
 /* =========================================
    Open Button (Reopen Bar)
    ========================================= */
-.sab-open-btn {
+.simpanbar-open-btn {
     position: fixed;
-    background: var(--sab-open-bg);
-    color: var(--sab-open-text);
+    background: var(--simpanbar-open-bg);
+    color: var(--simpanbar-open-text);
     border: none;
     cursor: pointer;
     font-size: 18px;
     padding: 8px 12px;
     border-radius: 0 0 6px 6px;
-    z-index: var(--sab-z-index);
+    z-index: var(--simpanbar-z-index);
     transition: background-color 0.2s ease, color 0.2s ease;
     display: none; /* Shown by JS when bar is dismissed */
     box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
-.sab-open-btn:hover {
-    background-color: var(--sab-open-hover-bg);
-    color: var(--sab-open-hover-text);
+.simpanbar-open-btn:hover {
+    background-color: var(--simpanbar-open-hover-bg);
+    color: var(--simpanbar-open-hover-text);
 }
 
-.sab-open-btn.sab-pos-top {
+.simpanbar-open-btn.simpanbar-pos-top {
     top: 0;
     left: 50%;
     transform: translateX(-50%);
     border-radius: 0 0 6px 6px;
 }
 
-.sab-open-btn.sab-pos-bottom {
+.simpanbar-open-btn.simpanbar-pos-bottom {
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
@@ -279,7 +279,7 @@
 /* =========================================
    Countdown Timer
    ========================================= */
-.sab-countdown {
+.simpanbar-countdown {
     display: inline-flex;
     align-items: center;
     gap: 4px;
@@ -290,7 +290,7 @@
     z-index: 1;
 }
 
-.sab-cd-part {
+.simpanbar-cd-part {
     display: inline-flex;
     align-items: baseline;
     gap: 2px;
@@ -299,7 +299,7 @@
     border-radius: 3px;
 }
 
-.sab-cd-val {
+.simpanbar-cd-val {
     font-size: 15px;
     font-weight: 700;
     font-variant-numeric: tabular-nums;
@@ -307,7 +307,7 @@
     text-align: center;
 }
 
-.sab-cd-label {
+.simpanbar-cd-label {
     font-size: 10px;
     opacity: 0.8;
     text-transform: uppercase;
@@ -316,13 +316,13 @@
 /* =========================================
    Body Padding (sticky bar compensation)
    ========================================= */
-body.sab-sticky-top {
-    padding-top: var(--sab-bar-height, 44px) !important;
+body.simpanbar-sticky-top {
+    padding-top: var(--simpanbar-bar-height, 44px) !important;
     transition: padding-top 0.4s ease;
 }
 
-body.sab-sticky-bottom {
-    padding-bottom: var(--sab-bar-height, 44px) !important;
+body.simpanbar-sticky-bottom {
+    padding-bottom: var(--simpanbar-bar-height, 44px) !important;
     transition: padding-bottom 0.4s ease;
 }
 
@@ -332,23 +332,23 @@ body.sab-sticky-bottom {
    Mobile Responsive
    ========================================= */
 @media (max-width: 768px) {
-    #sab-announcement-bar {
+    #simpanbar-announcement-bar {
         font-size: 13px;
     }
 
-    .sab-content {
+    .simpanbar-content {
         gap: 8px;
     }
 
-    .sab-button {
+    .simpanbar-button {
         font-size: 12px;
     }
 
-    .sab-countdown {
+    .simpanbar-countdown {
         font-size: 11px;
     }
 
-    .sab-cd-val {
+    .simpanbar-cd-val {
         font-size: 13px;
     }
 }

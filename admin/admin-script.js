@@ -10,15 +10,15 @@
     // =========================================
     // 1. Tab Navigation
     // =========================================
-    $( '.sab-tabs li' ).on( 'click', function () {
+    $( '.simpanbar-tabs li' ).on( 'click', function () {
         var targetTab = $( this ).data( 'tab' );
         
         // Update active tab
-        $( '.sab-tabs li' ).removeClass( 'active' );
+        $( '.simpanbar-tabs li' ).removeClass( 'active' );
         $( this ).addClass( 'active' );
         
         // Show target content
-        $( '.sab-tab-content' ).removeClass( 'active' );
+        $( '.simpanbar-tab-content' ).removeClass( 'active' );
         $( '#' + targetTab ).addClass( 'active' );
     } );
 
@@ -49,7 +49,7 @@
     // 3. Color Pickers
     // =========================================
     function initColorPickers() {
-        $( '.sab-color-picker' ).wpColorPicker( {
+        $( '.simpanbar-color-picker' ).wpColorPicker( {
             change: function () {
                 // Debounce preview update
                 clearTimeout( window.sabPreviewTimer );
@@ -67,7 +67,7 @@
     // =========================================
     function initConditionalFields() {
         function evaluateConditions() {
-            $( '.sab-conditional' ).each( function () {
+            $( '.simpanbar-conditional' ).each( function () {
                 var $row = $( this );
                 var controlId = $row.data( 'show-if' );
                 var showVal = String( $row.data( 'show-val' ) );
@@ -84,9 +84,9 @@
                 }
                 
                 if ( show ) {
-                    $row.addClass( 'sab-visible' );
+                    $row.addClass( 'simpanbar-visible' );
                 } else {
-                    $row.removeClass( 'sab-visible' );
+                    $row.removeClass( 'simpanbar-visible' );
                 }
             } );
         }
@@ -95,7 +95,7 @@
         evaluateConditions();
         
         // Re-evaluate on any input change
-        $( '#sab-settings-form' ).on( 'change input', 'input, select', function () {
+        $( '#simpanbar-settings-form' ).on( 'change input', 'input, select', function () {
             evaluateConditions();
         } );
     }
@@ -104,7 +104,7 @@
     // 5. Live Preview
     // =========================================
     function getFieldValue( name ) {
-        var $el = $( '[name="sab_settings[' + name + ']"]' );
+        var $el = $( '[name="simpanbar_settings[' + name + ']"]' );
         if ( ! $el.length ) return '';
         if ( $el.is( ':checkbox' ) ) return $el.is( ':checked' ) ? '1' : '0';
         return $el.val() || '';
@@ -119,16 +119,16 @@
     }
 
     function updatePreview() {
-        var $container = $( '#sab-preview-container' );
+        var $container = $( '#simpanbar-preview-container' );
         if ( ! $container.length ) return;
 
         // Gather all current values
-        var message = $( '#sab_message' ).val() || 'Your announcement message here.';
-        var btnText = $( '#sab_btn_text' ).val() || '';
-        var btnUrl = $( '#sab_btn_url' ).val() || '#';
+        var message = $( '#simpanbar_message' ).val() || 'Your announcement message here.';
+        var btnText = $( '#simpanbar_btn_text' ).val() || '';
+        var btnUrl = $( '#simpanbar_btn_url' ).val() || '#';
         
-        var position = $( '#sab_position' ).val() || 'top';
-        var contentWidth = $( '#sab_content_width' ).val() || 'boxed';
+        var position = $( '#simpanbar_position' ).val() || 'top';
+        var contentWidth = $( '#simpanbar_content_width' ).val() || 'boxed';
         
         var paddingTop = getFieldValue( 'padding_top' ) || 10;
         var paddingRight = getFieldValue( 'padding_right' ) || 15;
@@ -161,64 +161,64 @@
 
         // Build CSS variables
         var cssVars = [
-            '--sab-bg-color: ' + bgColor,
-            '--sab-bg-opacity: ' + bgOpacity,
-            '--sab-text-color: ' + textColor,
-            '--sab-padding: ' + paddingTop + 'px ' + ( parseInt( paddingRight ) + ( showClose ? 40 : 0 ) ) + 'px ' + paddingBottom + 'px ' + paddingLeft + 'px',
-            '--sab-spacing: ' + spacing + 'px',
-            '--sab-border-width: ' + borderWidth + 'px',
-            '--sab-border-style: ' + borderStyle,
-            '--sab-border-color: ' + borderColor,
-            '--sab-btn-bg: ' + btnBg,
-            '--sab-btn-text: ' + btnText2,
-            '--sab-btn-hover-bg: ' + btnBg,
-            '--sab-btn-hover-text: ' + btnText2,
-            '--sab-btn-padding: ' + btnPadding,
-            '--sab-btn-radius: ' + btnRadius + 'px',
-            '--sab-close-text: ' + closeTextColor,
-            '--sab-close-bg: ' + closeBgColor,
-            '--sab-close-hover-bg: ' + closeHoverBg,
-            '--sab-close-hover-text: ' + closeHoverText,
-            '--sab-z-index: 1',
-            '--sab-margin: 0',
+            '--simpanbar-bg-color: ' + bgColor,
+            '--simpanbar-bg-opacity: ' + bgOpacity,
+            '--simpanbar-text-color: ' + textColor,
+            '--simpanbar-padding: ' + paddingTop + 'px ' + ( parseInt( paddingRight ) + ( showClose ? 40 : 0 ) ) + 'px ' + paddingBottom + 'px ' + paddingLeft + 'px',
+            '--simpanbar-spacing: ' + spacing + 'px',
+            '--simpanbar-border-width: ' + borderWidth + 'px',
+            '--simpanbar-border-style: ' + borderStyle,
+            '--simpanbar-border-color: ' + borderColor,
+            '--simpanbar-btn-bg: ' + btnBg,
+            '--simpanbar-btn-text: ' + btnText2,
+            '--simpanbar-btn-hover-bg: ' + btnBg,
+            '--simpanbar-btn-hover-text: ' + btnText2,
+            '--simpanbar-btn-padding: ' + btnPadding,
+            '--simpanbar-btn-radius: ' + btnRadius + 'px',
+            '--simpanbar-close-text: ' + closeTextColor,
+            '--simpanbar-close-bg: ' + closeBgColor,
+            '--simpanbar-close-hover-bg: ' + closeHoverBg,
+            '--simpanbar-close-hover-text: ' + closeHoverText,
+            '--simpanbar-z-index: 1',
+            '--simpanbar-margin: 0',
         ].join( '; ' );
 
         // Enforce only top/bottom in preview
         if ( position !== 'top' && position !== 'bottom' ) position = 'top';
 
         // Build classes
-        var classes = 'sab-bar sab-pos-' + position;
-        if ( contentWidth === 'full' ) classes += ' sab-full-width';
+        var classes = 'simpanbar-bar sab-pos-' + position;
+        if ( contentWidth === 'full' ) classes += ' simpanbar-full-width';
 
         // Build countdown HTML
         var countdownHtml = '';
         if ( enableCountdown && countdownTarget ) {
-            countdownHtml = '<span class="sab-countdown" style="margin-left:12px;">' +
-                '<span class="sab-cd-part"><span class="sab-cd-val">00</span><span class="sab-cd-label">d</span></span>' +
-                '<span class="sab-cd-part"><span class="sab-cd-val">00</span><span class="sab-cd-label">h</span></span>' +
-                '<span class="sab-cd-part"><span class="sab-cd-val">00</span><span class="sab-cd-label">m</span></span>' +
-                '<span class="sab-cd-part"><span class="sab-cd-val">00</span><span class="sab-cd-label">s</span></span>' +
+            countdownHtml = '<span class="simpanbar-countdown" style="margin-left:12px;">' +
+                '<span class="simpanbar-cd-part"><span class="simpanbar-cd-val">00</span><span class="simpanbar-cd-label">d</span></span>' +
+                '<span class="simpanbar-cd-part"><span class="simpanbar-cd-val">00</span><span class="simpanbar-cd-label">h</span></span>' +
+                '<span class="simpanbar-cd-part"><span class="simpanbar-cd-val">00</span><span class="simpanbar-cd-label">m</span></span>' +
+                '<span class="simpanbar-cd-part"><span class="simpanbar-cd-val">00</span><span class="simpanbar-cd-label">s</span></span>' +
                 '</span>';
         }
 
         // Build button HTML
         var buttonHtml = '';
         if ( btnText ) {
-            buttonHtml = '<a href="#" class="sab-button" style="pointer-events:none;">' + sabEscHtml( btnText ) + '</a>';
+            buttonHtml = '<a href="#" class="simpanbar-button" style="pointer-events:none;">' + sabEscHtml( btnText ) + '</a>';
         }
 
         // Build close button HTML
         var closeHtml = '';
         if ( showClose ) {
-            closeHtml = '<button class="sab-close" style="color:' + closeTextColor + ';">' + sabEscHtml( closeText ) + '</button>';
+            closeHtml = '<button class="simpanbar-close" style="color:' + closeTextColor + ';">' + sabEscHtml( closeText ) + '</button>';
         }
 
         // Build the full preview bar HTML
         var html = '<div class="' + classes + '" style="' + cssVars + '">' +
-            '<div class="sab-bg-overlay"></div>' +
-            '<div class="sab-content">' +
-                '<div class="sab-message-wrap">' +
-                    '<span class="sab-message">' + message + '</span>' +
+            '<div class="simpanbar-bg-overlay"></div>' +
+            '<div class="simpanbar-content">' +
+                '<div class="simpanbar-message-wrap">' +
+                    '<span class="simpanbar-message">' + message + '</span>' +
                     countdownHtml +
                 '</div>' +
                 buttonHtml +
@@ -242,7 +242,7 @@
     // 6. Bind All Input Changes to Preview
     // =========================================
     function bindPreviewUpdates() {
-        $( '#sab-settings-form' ).on( 'input change', 'input, select, textarea', function () {
+        $( '#simpanbar-settings-form' ).on( 'input change', 'input, select, textarea', function () {
             clearTimeout( window.sabPreviewTimer );
             window.sabPreviewTimer = setTimeout( updatePreview, 150 );
         } );

@@ -10,47 +10,47 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Register settings menu
  */
-function sab_add_admin_menu() {
+function simpanbar_add_admin_menu() {
     $page_hook = add_options_page(
         __( 'Announcement Bar Settings', 'simple-announcement-bar' ),
         __( 'Announcement Bar', 'simple-announcement-bar' ),
         'manage_options',
         'simple-announcement-bar',
-        'sab_options_page'
+        'simpanbar_options_page'
     );
 
     // Load admin assets only on this page
-    add_action( "admin_print_scripts-{$page_hook}", 'sab_admin_assets' );
+    add_action( "admin_print_scripts-{$page_hook}", 'simpanbar_admin_assets' );
 }
-add_action( 'admin_menu', 'sab_add_admin_menu' );
+add_action( 'admin_menu', 'simpanbar_add_admin_menu' );
 
 /**
  * Enqueue admin scripts and styles
  */
-function sab_admin_assets() {
+function simpanbar_admin_assets() {
     wp_enqueue_style( 'wp-color-picker' );
     wp_enqueue_script( 'wp-color-picker' );
-    
+
     // We also enqueue the frontend CSS to make the live preview accurate
-    wp_enqueue_style( 'sab-frontend-style', SAB_PLUGIN_URL . 'assets/css/style.css', array(), SAB_VERSION );
-    
-    wp_enqueue_style( 'sab-admin-style', SAB_PLUGIN_URL . 'admin/admin-style.css', array(), SAB_VERSION );
-    wp_enqueue_script( 'sab-admin-script', SAB_PLUGIN_URL . 'admin/admin-script.js', array( 'jquery', 'wp-color-picker' ), SAB_VERSION, true );
+    wp_enqueue_style( 'simpanbar-frontend-style', SIMPANBAR_PLUGIN_URL . 'assets/css/style.css', array(), SIMPANBAR_VERSION );
+
+    wp_enqueue_style( 'simpanbar-admin-style', SIMPANBAR_PLUGIN_URL . 'admin/admin-style.css', array(), SIMPANBAR_VERSION );
+    wp_enqueue_script( 'simpanbar-admin-script', SIMPANBAR_PLUGIN_URL . 'admin/admin-script.js', array( 'jquery', 'wp-color-picker' ), SIMPANBAR_VERSION, true );
 }
 
 /**
  * Register settings
  */
-function sab_settings_init() {
-    register_setting( 'sab_plugin_page', 'sab_settings', 'sab_sanitize_settings' );
+function simpanbar_settings_init() {
+    register_setting( 'simpanbar_plugin_page', 'simpanbar_settings', 'simpanbar_sanitize_settings' );
 }
-add_action( 'admin_init', 'sab_settings_init' );
+add_action( 'admin_init', 'simpanbar_settings_init' );
 
 /**
  * Sanitize settings
  */
-function sab_sanitize_settings( $input ) {
-    $sanitized = sab_get_default_settings();
+function simpanbar_sanitize_settings( $input ) {
+    $sanitized = simpanbar_get_default_settings();
     
     // General
     if ( isset( $input['message'] ) ) $sanitized['message'] = wp_kses_post( $input['message'] );
@@ -137,81 +137,81 @@ function sab_sanitize_settings( $input ) {
 /**
  * Options Page HTML
  */
-function sab_options_page() {
+function simpanbar_options_page() {
     if ( ! current_user_can( 'manage_options' ) ) {
-        return;
+        wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'simple-announcement-bar' ) );
     }
-    
-    $settings = sab_get_settings();
+
+    $settings = simpanbar_get_settings();
     ?>
-    <div class="wrap sab-admin-wrap">
+    <div class="wrap simpanbar-admin-wrap">
         <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
         
-        <div class="sab-admin-container">
+        <div class="simpanbar-admin-container">
             
             <!-- Sidebar Navigation -->
-            <div class="sab-admin-sidebar">
-                <ul class="sab-tabs">
+            <div class="simpanbar-admin-sidebar">
+                <ul class="simpanbar-tabs">
                     <li class="active" data-tab="tab-general">General</li>
                     <li data-tab="tab-visibility">Visibility</li>
                     <li data-tab="tab-design">Design</li>
                     <li data-tab="tab-behavior">Behavior</li>
                     <li data-tab="tab-scheduling">Scheduling & Countdown</li>
                 </ul>
-                <div class="sab-save-panel">
-                    <button type="submit" form="sab-settings-form" class="button button-primary button-hero">Save Settings</button>
+                <div class="simpanbar-save-panel">
+                    <button type="submit" form="simpanbar-settings-form" class="button button-primary button-hero">Save Settings</button>
                 </div>
             </div>
 
             <!-- Main Content Area -->
-            <div class="sab-admin-main">
+            <div class="simpanbar-admin-main">
                 
                 <!-- Live Preview Panel -->
-                <div class="sab-preview-panel">
+                <div class="simpanbar-preview-panel">
                     <h3>Live Preview</h3>
-                    <div class="sab-preview-container" id="sab-preview-container">
+                    <div class="simpanbar-preview-container" id="simpanbar-preview-container">
                         <!-- Preview will be injected here via JS -->
                     </div>
                 </div>
 
-                <form action="options.php" method="post" id="sab-settings-form">
-                    <?php settings_fields( 'sab_plugin_page' ); ?>
+                <form action="options.php" method="post" id="simpanbar-settings-form">
+                    <?php settings_fields( 'simpanbar_plugin_page' ); ?>
                     
                     <!-- TAB: GENERAL -->
-                    <div id="tab-general" class="sab-tab-content active">
+                    <div id="tab-general" class="simpanbar-tab-content active">
                         <h2>General Content</h2>
                         <table class="form-table">
                             <tr>
                                 <th scope="row">Announcement Message</th>
                                 <td>
-                                    <textarea name="sab_settings[message]" id="sab_message" rows="4" class="large-text"><?php echo esc_textarea( $settings['message'] ); ?></textarea>
+                                    <textarea name="simpanbar_settings[message]" id="simpanbar_message" rows="4" class="large-text"><?php echo esc_textarea( $settings['message'] ); ?></textarea>
                                     <p class="description">Basic HTML allowed (e.g., &lt;strong&gt;, &lt;a&gt;).</p>
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row">Button Text</th>
                                 <td>
-                                    <input type="text" name="sab_settings[btn_text]" id="sab_btn_text" value="<?php echo esc_attr( $settings['btn_text'] ); ?>" class="regular-text">
+                                    <input type="text" name="simpanbar_settings[btn_text]" id="simpanbar_btn_text" value="<?php echo esc_attr( $settings['btn_text'] ); ?>" class="regular-text">
                                     <p class="description">Leave blank to hide the button.</p>
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row">Button URL</th>
                                 <td>
-                                    <input type="url" name="sab_settings[btn_url]" id="sab_btn_url" value="<?php echo esc_url( $settings['btn_url'] ); ?>" class="regular-text">
+                                    <input type="url" name="simpanbar_settings[btn_url]" id="simpanbar_btn_url" value="<?php echo esc_url( $settings['btn_url'] ); ?>" class="regular-text">
                                 </td>
                             </tr>
                         </table>
                     </div>
 
                     <!-- TAB: VISIBILITY -->
-                    <div id="tab-visibility" class="sab-tab-content">
+                    <div id="tab-visibility" class="simpanbar-tab-content">
                         <h2>Visibility & Targeting</h2>
                         <table class="form-table">
                             <tr>
                                 <th scope="row">Show On</th>
                                 <td>
-                                    <select name="sab_settings[show_on]" id="sab_show_on">
+                                    <select name="simpanbar_settings[show_on]" id="simpanbar_show_on">
                                         <option value="entire_site" <?php selected( $settings['show_on'], 'entire_site' ); ?>>Entire Site</option>
                                         <option value="homepage" <?php selected( $settings['show_on'], 'homepage' ); ?>>Homepage Only</option>
                                         <option value="posts" <?php selected( $settings['show_on'], 'posts' ); ?>>All Posts</option>
@@ -220,37 +220,37 @@ function sab_options_page() {
                                     </select>
                                 </td>
                             </tr>
-                            <tr class="sab-conditional" data-show-if="sab_show_on" data-show-val="specific">
+                            <tr class="simpanbar-conditional" data-show-if="sab_show_on" data-show-val="specific">
                                 <th scope="row">Include Specific IDs</th>
                                 <td>
-                                    <input type="text" name="sab_settings[specific_ids]" value="<?php echo esc_attr( $settings['specific_ids'] ); ?>" class="regular-text">
+                                    <input type="text" name="simpanbar_settings[specific_ids]" value="<?php echo esc_attr( $settings['specific_ids'] ); ?>" class="regular-text">
                                     <p class="description">Comma-separated list of Post/Page IDs (e.g., 12, 45, 99).</p>
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row">Exclude Specific IDs</th>
                                 <td>
-                                    <input type="text" name="sab_settings[exclude_ids]" value="<?php echo esc_attr( $settings['exclude_ids'] ); ?>" class="regular-text">
+                                    <input type="text" name="simpanbar_settings[exclude_ids]" value="<?php echo esc_attr( $settings['exclude_ids'] ); ?>" class="regular-text">
                                     <p class="description">Comma-separated list of Post/Page IDs to hide the bar on.</p>
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row">Device Targeting</th>
                                 <td>
-                                    <label class="sab-toggle">
-                                        <input type="checkbox" name="sab_settings[hide_mobile]" value="1" <?php checked( 1, $settings['hide_mobile'] ); ?>>
-                                        <span class="sab-slider"></span>
+                                    <label class="simpanbar-toggle">
+                                        <input type="checkbox" name="simpanbar_settings[hide_mobile]" value="1" <?php checked( 1, $settings['hide_mobile'] ); ?>>
+                                        <span class="simpanbar-slider"></span>
                                     </label> Hide on Mobile<br><br>
-                                    <label class="sab-toggle">
-                                        <input type="checkbox" name="sab_settings[hide_desktop]" value="1" <?php checked( 1, $settings['hide_desktop'] ); ?>>
-                                        <span class="sab-slider"></span>
+                                    <label class="simpanbar-toggle">
+                                        <input type="checkbox" name="simpanbar_settings[hide_desktop]" value="1" <?php checked( 1, $settings['hide_desktop'] ); ?>>
+                                        <span class="simpanbar-slider"></span>
                                     </label> Hide on Desktop
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row">Show Limit</th>
                                 <td>
-                                    <input type="number" name="sab_settings[show_limit]" value="<?php echo esc_attr( $settings['show_limit'] ); ?>" min="0" class="small-text">
+                                    <input type="number" name="simpanbar_settings[show_limit]" value="<?php echo esc_attr( $settings['show_limit'] ); ?>" min="0" class="small-text">
                                     <p class="description">Show X times per user. Set to 0 for unlimited.</p>
                                 </td>
                             </tr>
@@ -258,7 +258,7 @@ function sab_options_page() {
                     </div>
 
                     <!-- TAB: DESIGN -->
-                    <div id="tab-design" class="sab-tab-content">
+                    <div id="tab-design" class="simpanbar-tab-content">
                         <h2>Design Settings</h2>
                         
                         <h3>Layout</h3>
@@ -266,7 +266,7 @@ function sab_options_page() {
                             <tr>
                                 <th scope="row">Position</th>
                                 <td>
-                                    <select name="sab_settings[position]" id="sab_position">
+                                    <select name="simpanbar_settings[position]" id="simpanbar_position">
                                         <option value="top" <?php selected( $settings['position'], 'top' ); ?>>Top</option>
                                         <option value="bottom" <?php selected( $settings['position'], 'bottom' ); ?>>Bottom</option>
                                     </select>
@@ -275,7 +275,7 @@ function sab_options_page() {
                             <tr>
                                 <th scope="row">Content Width</th>
                                 <td>
-                                    <select name="sab_settings[content_width]" id="sab_content_width">
+                                    <select name="simpanbar_settings[content_width]" id="simpanbar_content_width">
                                         <option value="boxed" <?php selected( $settings['content_width'], 'boxed' ); ?>>Boxed (Max 1200px)</option>
                                         <option value="full" <?php selected( $settings['content_width'], 'full' ); ?>>Full Width</option>
                                     </select>
@@ -284,26 +284,26 @@ function sab_options_page() {
                             <tr>
                                 <th scope="row">Padding (px)</th>
                                 <td>
-                                    Top: <input type="number" name="sab_settings[padding_top]" id="sab_padding_top" value="<?php echo esc_attr( $settings['padding_top'] ); ?>" class="small-text">
-                                    Right: <input type="number" name="sab_settings[padding_right]" id="sab_padding_right" value="<?php echo esc_attr( $settings['padding_right'] ); ?>" class="small-text">
-                                    Bottom: <input type="number" name="sab_settings[padding_bottom]" id="sab_padding_bottom" value="<?php echo esc_attr( $settings['padding_bottom'] ); ?>" class="small-text">
-                                    Left: <input type="number" name="sab_settings[padding_left]" id="sab_padding_left" value="<?php echo esc_attr( $settings['padding_left'] ); ?>" class="small-text">
+                                    Top: <input type="number" name="simpanbar_settings[padding_top]" id="simpanbar_padding_top" value="<?php echo esc_attr( $settings['padding_top'] ); ?>" class="small-text">
+                                    Right: <input type="number" name="simpanbar_settings[padding_right]" id="simpanbar_padding_right" value="<?php echo esc_attr( $settings['padding_right'] ); ?>" class="small-text">
+                                    Bottom: <input type="number" name="simpanbar_settings[padding_bottom]" id="simpanbar_padding_bottom" value="<?php echo esc_attr( $settings['padding_bottom'] ); ?>" class="small-text">
+                                    Left: <input type="number" name="simpanbar_settings[padding_left]" id="simpanbar_padding_left" value="<?php echo esc_attr( $settings['padding_left'] ); ?>" class="small-text">
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row">Margin (px)</th>
                                 <td>
-                                    Top: <input type="number" name="sab_settings[margin_top]" id="sab_margin_top" value="<?php echo esc_attr( $settings['margin_top'] ); ?>" class="small-text">
-                                    Right: <input type="number" name="sab_settings[margin_right]" id="sab_margin_right" value="<?php echo esc_attr( $settings['margin_right'] ); ?>" class="small-text">
-                                    Bottom: <input type="number" name="sab_settings[margin_bottom]" id="sab_margin_bottom" value="<?php echo esc_attr( $settings['margin_bottom'] ); ?>" class="small-text">
-                                    Left: <input type="number" name="sab_settings[margin_left]" id="sab_margin_left" value="<?php echo esc_attr( $settings['margin_left'] ); ?>" class="small-text">
+                                    Top: <input type="number" name="simpanbar_settings[margin_top]" id="simpanbar_margin_top" value="<?php echo esc_attr( $settings['margin_top'] ); ?>" class="small-text">
+                                    Right: <input type="number" name="simpanbar_settings[margin_right]" id="simpanbar_margin_right" value="<?php echo esc_attr( $settings['margin_right'] ); ?>" class="small-text">
+                                    Bottom: <input type="number" name="simpanbar_settings[margin_bottom]" id="simpanbar_margin_bottom" value="<?php echo esc_attr( $settings['margin_bottom'] ); ?>" class="small-text">
+                                    Left: <input type="number" name="simpanbar_settings[margin_left]" id="simpanbar_margin_left" value="<?php echo esc_attr( $settings['margin_left'] ); ?>" class="small-text">
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row">Spacing (Text to Button)</th>
                                 <td>
-                                    <input type="range" name="sab_settings[spacing]" id="sab_spacing" value="<?php echo esc_attr( $settings['spacing'] ); ?>" min="0" max="100">
-                                    <span id="sab_spacing_val"><?php echo esc_attr( $settings['spacing'] ); ?>px</span>
+                                    <input type="range" name="simpanbar_settings[spacing]" id="simpanbar_spacing" value="<?php echo esc_attr( $settings['spacing'] ); ?>" min="0" max="100">
+                                    <span id="simpanbar_spacing_val"><?php echo esc_attr( $settings['spacing'] ); ?>px</span>
                                 </td>
                             </tr>
                         </table>
@@ -312,22 +312,22 @@ function sab_options_page() {
                         <table class="form-table">
                             <tr>
                                 <th scope="row">Background Color</th>
-                                <td><input type="text" name="sab_settings[bg_color]" id="sab_bg_color" value="<?php echo esc_attr( $settings['bg_color'] ); ?>" class="sab-color-picker"></td>
+                                <td><input type="text" name="simpanbar_settings[bg_color]" id="simpanbar_bg_color" value="<?php echo esc_attr( $settings['bg_color'] ); ?>" class="simpanbar-color-picker"></td>
                             </tr>
                             <tr>
                                 <th scope="row">Text Color</th>
-                                <td><input type="text" name="sab_settings[text_color]" id="sab_text_color" value="<?php echo esc_attr( $settings['text_color'] ); ?>" class="sab-color-picker"></td>
+                                <td><input type="text" name="simpanbar_settings[text_color]" id="simpanbar_text_color" value="<?php echo esc_attr( $settings['text_color'] ); ?>" class="simpanbar-color-picker"></td>
                             </tr>
                             <tr>
                                 <th scope="row">Background Opacity</th>
                                 <td>
-                                    <input type="range" name="sab_settings[bg_opacity]" id="sab_bg_opacity" value="<?php echo esc_attr( $settings['bg_opacity'] ); ?>" min="0" max="100">
-                                    <span id="sab_bg_opacity_val"><?php echo esc_attr( $settings['bg_opacity'] ); ?>%</span>
+                                    <input type="range" name="simpanbar_settings[bg_opacity]" id="simpanbar_bg_opacity" value="<?php echo esc_attr( $settings['bg_opacity'] ); ?>" min="0" max="100">
+                                    <span id="simpanbar_bg_opacity_val"><?php echo esc_attr( $settings['bg_opacity'] ); ?>%</span>
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row">Background Image URL</th>
-                                <td><input type="url" name="sab_settings[bg_image]" id="sab_bg_image" value="<?php echo esc_url( $settings['bg_image'] ); ?>" class="regular-text"></td>
+                                <td><input type="url" name="simpanbar_settings[bg_image]" id="simpanbar_bg_image" value="<?php echo esc_url( $settings['bg_image'] ); ?>" class="regular-text"></td>
                             </tr>
                         </table>
 
@@ -335,12 +335,12 @@ function sab_options_page() {
                         <table class="form-table">
                             <tr>
                                 <th scope="row">Border Width (px)</th>
-                                <td><input type="number" name="sab_settings[border_width]" id="sab_border_width" value="<?php echo esc_attr( $settings['border_width'] ); ?>" min="0" class="small-text"></td>
+                                <td><input type="number" name="simpanbar_settings[border_width]" id="simpanbar_border_width" value="<?php echo esc_attr( $settings['border_width'] ); ?>" min="0" class="small-text"></td>
                             </tr>
                             <tr>
                                 <th scope="row">Border Style</th>
                                 <td>
-                                    <select name="sab_settings[border_style]" id="sab_border_style">
+                                    <select name="simpanbar_settings[border_style]" id="simpanbar_border_style">
                                         <option value="solid" <?php selected( $settings['border_style'], 'solid' ); ?>>Solid</option>
                                         <option value="dashed" <?php selected( $settings['border_style'], 'dashed' ); ?>>Dashed</option>
                                         <option value="dotted" <?php selected( $settings['border_style'], 'dotted' ); ?>>Dotted</option>
@@ -349,7 +349,7 @@ function sab_options_page() {
                             </tr>
                             <tr>
                                 <th scope="row">Border Color</th>
-                                <td><input type="text" name="sab_settings[border_color]" id="sab_border_color" value="<?php echo esc_attr( $settings['border_color'] ); ?>" class="sab-color-picker"></td>
+                                <td><input type="text" name="simpanbar_settings[border_color]" id="simpanbar_border_color" value="<?php echo esc_attr( $settings['border_color'] ); ?>" class="simpanbar-color-picker"></td>
                             </tr>
                         </table>
 
@@ -357,28 +357,28 @@ function sab_options_page() {
                         <table class="form-table">
                             <tr>
                                 <th scope="row">Background Color</th>
-                                <td><input type="text" name="sab_settings[btn_bg_color]" id="sab_btn_bg_color" value="<?php echo esc_attr( $settings['btn_bg_color'] ); ?>" class="sab-color-picker"></td>
+                                <td><input type="text" name="simpanbar_settings[btn_bg_color]" id="simpanbar_btn_bg_color" value="<?php echo esc_attr( $settings['btn_bg_color'] ); ?>" class="simpanbar-color-picker"></td>
                             </tr>
                             <tr>
                                 <th scope="row">Text Color</th>
-                                <td><input type="text" name="sab_settings[btn_text_color]" id="sab_btn_text_color" value="<?php echo esc_attr( $settings['btn_text_color'] ); ?>" class="sab-color-picker"></td>
+                                <td><input type="text" name="simpanbar_settings[btn_text_color]" id="simpanbar_btn_text_color" value="<?php echo esc_attr( $settings['btn_text_color'] ); ?>" class="simpanbar-color-picker"></td>
                             </tr>
                             <tr>
                                 <th scope="row">Hover Background</th>
-                                <td><input type="text" name="sab_settings[btn_hover_bg]" id="sab_btn_hover_bg" value="<?php echo esc_attr( $settings['btn_hover_bg'] ); ?>" class="sab-color-picker"></td>
+                                <td><input type="text" name="simpanbar_settings[btn_hover_bg]" id="simpanbar_btn_hover_bg" value="<?php echo esc_attr( $settings['btn_hover_bg'] ); ?>" class="simpanbar-color-picker"></td>
                             </tr>
                             <tr>
                                 <th scope="row">Hover Text</th>
-                                <td><input type="text" name="sab_settings[btn_hover_text]" id="sab_btn_hover_text" value="<?php echo esc_attr( $settings['btn_hover_text'] ); ?>" class="sab-color-picker"></td>
+                                <td><input type="text" name="simpanbar_settings[btn_hover_text]" id="simpanbar_btn_hover_text" value="<?php echo esc_attr( $settings['btn_hover_text'] ); ?>" class="simpanbar-color-picker"></td>
                             </tr>
                             <tr>
                                 <th scope="row">Padding</th>
-                                <td><input type="text" name="sab_settings[btn_padding]" id="sab_btn_padding" value="<?php echo esc_attr( $settings['btn_padding'] ); ?>" class="regular-text"></td>
+                                <td><input type="text" name="simpanbar_settings[btn_padding]" id="simpanbar_btn_padding" value="<?php echo esc_attr( $settings['btn_padding'] ); ?>" class="regular-text"></td>
                             </tr>
                             <tr>
                                 <th scope="row">Border Radius (px)</th>
                                 <td>
-                                    <input type="number" name="sab_settings[btn_radius]" id="sab_btn_radius" value="<?php echo esc_attr( $settings['btn_radius'] ); ?>" min="0" class="small-text">
+                                    <input type="number" name="simpanbar_settings[btn_radius]" id="simpanbar_btn_radius" value="<?php echo esc_attr( $settings['btn_radius'] ); ?>" min="0" class="small-text">
                                     <p class="description">Controls the roundness of the button corners (0 = square).</p>
                                 </td>
                             </tr>
@@ -388,36 +388,36 @@ function sab_options_page() {
                         <table class="form-table">
                             <tr>
                                 <th scope="row">Icon / Text Color</th>
-                                <td><input type="text" name="sab_settings[close_text_color]" id="sab_close_text_color" value="<?php echo esc_attr( $settings['close_text_color'] ); ?>" class="sab-color-picker"></td>
+                                <td><input type="text" name="simpanbar_settings[close_text_color]" id="simpanbar_close_text_color" value="<?php echo esc_attr( $settings['close_text_color'] ); ?>" class="simpanbar-color-picker"></td>
                             </tr>
                             <tr>
                                 <th scope="row">Background Color</th>
                                 <td>
-                                    <input type="text" name="sab_settings[close_bg_color]" id="sab_close_bg_color" value="<?php echo esc_attr( $settings['close_bg_color'] === 'transparent' ? '#000000' : $settings['close_bg_color'] ); ?>" class="sab-color-picker">
+                                    <input type="text" name="simpanbar_settings[close_bg_color]" id="simpanbar_close_bg_color" value="<?php echo esc_attr( $settings['close_bg_color'] === 'transparent' ? '#000000' : $settings['close_bg_color'] ); ?>" class="simpanbar-color-picker">
                                     <p class="description">Background behind the × icon. Use a dark/light color to make it stand out.</p>
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row">Hover Icon / Text Color</th>
-                                <td><input type="text" name="sab_settings[close_hover_text]" id="sab_close_hover_text" value="<?php echo esc_attr( $settings['close_hover_text'] ); ?>" class="sab-color-picker"></td>
+                                <td><input type="text" name="simpanbar_settings[close_hover_text]" id="simpanbar_close_hover_text" value="<?php echo esc_attr( $settings['close_hover_text'] ); ?>" class="simpanbar-color-picker"></td>
                             </tr>
                             <tr>
                                 <th scope="row">Hover Background Color</th>
-                                <td><input type="text" name="sab_settings[close_hover_bg]" id="sab_close_hover_bg" value="<?php echo esc_attr( $settings['close_hover_bg'] === 'rgba(255,255,255,0.1)' ? '#ffffff' : $settings['close_hover_bg'] ); ?>" class="sab-color-picker"></td>
+                                <td><input type="text" name="simpanbar_settings[close_hover_bg]" id="simpanbar_close_hover_bg" value="<?php echo esc_attr( $settings['close_hover_bg'] === 'rgba(255,255,255,0.1)' ? '#ffffff' : $settings['close_hover_bg'] ); ?>" class="simpanbar-color-picker"></td>
                             </tr>
                         </table>
                     </div>
 
                     <!-- TAB: BEHAVIOR -->
-                    <div id="tab-behavior" class="sab-tab-content">
+                    <div id="tab-behavior" class="simpanbar-tab-content">
                         <h2>Behavior Controls</h2>
                         <table class="form-table">
                             <tr>
                                 <th scope="row">Sticky Bar</th>
                                 <td>
-                                    <label class="sab-toggle">
-                                        <input type="checkbox" name="sab_settings[is_sticky]" id="sab_is_sticky" value="1" <?php checked( 1, $settings['is_sticky'] ); ?>>
-                                        <span class="sab-slider"></span>
+                                    <label class="simpanbar-toggle">
+                                        <input type="checkbox" name="simpanbar_settings[is_sticky]" id="simpanbar_is_sticky" value="1" <?php checked( 1, $settings['is_sticky'] ); ?>>
+                                        <span class="simpanbar-slider"></span>
                                     </label>
                                     <p class="description">Fixes the bar to the viewport as users scroll.</p>
                                 </td>
@@ -425,7 +425,7 @@ function sab_options_page() {
                             <tr>
                                 <th scope="row">Animation Type</th>
                                 <td>
-                                    <select name="sab_settings[animation]" id="sab_animation">
+                                    <select name="simpanbar_settings[animation]" id="simpanbar_animation">
                                         <option value="slide" <?php selected( $settings['animation'], 'slide' ); ?>>Slide</option>
                                         <option value="fade" <?php selected( $settings['animation'], 'fade' ); ?>>Fade</option>
                                         <option value="none" <?php selected( $settings['animation'], 'none' ); ?>>None</option>
@@ -435,24 +435,24 @@ function sab_options_page() {
                             <tr>
                                 <th scope="row">Notification Delay (Seconds)</th>
                                 <td>
-                                    <input type="range" name="sab_settings[delay]" value="<?php echo esc_attr( $settings['delay'] ); ?>" min="0" max="60">
+                                    <input type="range" name="simpanbar_settings[delay]" value="<?php echo esc_attr( $settings['delay'] ); ?>" min="0" max="60">
                                     <span><?php echo esc_attr( $settings['delay'] ); ?>s</span>
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row">Scroll Behavior</th>
                                 <td>
-                                    Show after scrolling %: <input type="number" name="sab_settings[scroll_show_percent]" value="<?php echo esc_attr( $settings['scroll_show_percent'] ); ?>" min="0" max="100" class="small-text">%<br><br>
-                                    <label class="sab-toggle">
-                                        <input type="checkbox" name="sab_settings[hide_on_scroll_down]" value="1" <?php checked( 1, $settings['hide_on_scroll_down'] ); ?>>
-                                        <span class="sab-slider"></span>
+                                    Show after scrolling %: <input type="number" name="simpanbar_settings[scroll_show_percent]" value="<?php echo esc_attr( $settings['scroll_show_percent'] ); ?>" min="0" max="100" class="small-text">%<br><br>
+                                    <label class="simpanbar-toggle">
+                                        <input type="checkbox" name="simpanbar_settings[hide_on_scroll_down]" value="1" <?php checked( 1, $settings['hide_on_scroll_down'] ); ?>>
+                                        <span class="simpanbar-slider"></span>
                                     </label> Hide on scroll down, show on scroll up
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row">Z-Index</th>
                                 <td>
-                                    <input type="number" name="sab_settings[z_index]" id="sab_z_index" value="<?php echo esc_attr( $settings['z_index'] ); ?>" class="regular-text">
+                                    <input type="number" name="simpanbar_settings[z_index]" id="simpanbar_z_index" value="<?php echo esc_attr( $settings['z_index'] ); ?>" class="regular-text">
                                 </td>
                             </tr>
                         </table>
@@ -462,23 +462,23 @@ function sab_options_page() {
                             <tr>
                                 <th scope="row">Show Close Button</th>
                                 <td>
-                                    <label class="sab-toggle">
-                                        <input type="checkbox" name="sab_settings[show_close_btn]" id="sab_show_close_btn" value="1" <?php checked( 1, $settings['show_close_btn'] ); ?>>
-                                        <span class="sab-slider"></span>
+                                    <label class="simpanbar-toggle">
+                                        <input type="checkbox" name="simpanbar_settings[show_close_btn]" id="simpanbar_show_close_btn" value="1" <?php checked( 1, $settings['show_close_btn'] ); ?>>
+                                        <span class="simpanbar-slider"></span>
                                     </label>
                                 </td>
                             </tr>
-                            <tr class="sab-conditional" data-show-if="sab_show_close_btn" data-show-val="checked">
+                            <tr class="simpanbar-conditional" data-show-if="sab_show_close_btn" data-show-val="checked">
                                 <th scope="row">Close Button Text</th>
-                                <td><input type="text" name="sab_settings[close_text]" id="sab_close_text" value="<?php echo esc_attr( $settings['close_text'] ); ?>" class="small-text"></td>
+                                <td><input type="text" name="simpanbar_settings[close_text]" id="simpanbar_close_text" value="<?php echo esc_attr( $settings['close_text'] ); ?>" class="small-text"></td>
                             </tr>
                             
                             <tr>
                                 <th scope="row">Load Minimized</th>
                                 <td>
-                                    <label class="sab-toggle">
-                                        <input type="checkbox" name="sab_settings[load_minimized]" value="1" <?php checked( 1, $settings['load_minimized'] ); ?>>
-                                        <span class="sab-slider"></span>
+                                    <label class="simpanbar-toggle">
+                                        <input type="checkbox" name="simpanbar_settings[load_minimized]" value="1" <?php checked( 1, $settings['load_minimized'] ); ?>>
+                                        <span class="simpanbar-slider"></span>
                                     </label>
                                     <p class="description">Bar starts hidden, only open button is visible.</p>
                                 </td>
@@ -487,22 +487,22 @@ function sab_options_page() {
                             <tr>
                                 <th scope="row">Show Open Button</th>
                                 <td>
-                                    <label class="sab-toggle">
-                                        <input type="checkbox" name="sab_settings[show_open_btn]" id="sab_show_open_btn" value="1" <?php checked( 1, $settings['show_open_btn'] ); ?>>
-                                        <span class="sab-slider"></span>
+                                    <label class="simpanbar-toggle">
+                                        <input type="checkbox" name="simpanbar_settings[show_open_btn]" id="simpanbar_show_open_btn" value="1" <?php checked( 1, $settings['show_open_btn'] ); ?>>
+                                        <span class="simpanbar-slider"></span>
                                     </label>
                                     <p class="description">Allows users to reopen the bar after closing it.</p>
                                 </td>
                             </tr>
-                            <tr class="sab-conditional" data-show-if="sab_show_open_btn" data-show-val="checked">
+                            <tr class="simpanbar-conditional" data-show-if="sab_show_open_btn" data-show-val="checked">
                                 <th scope="row">Open Button Text</th>
-                                <td><input type="text" name="sab_settings[open_text]" id="sab_open_text" value="<?php echo esc_attr( $settings['open_text'] ); ?>" class="small-text"></td>
+                                <td><input type="text" name="simpanbar_settings[open_text]" id="simpanbar_open_text" value="<?php echo esc_attr( $settings['open_text'] ); ?>" class="small-text"></td>
                             </tr>
                         </table>
                     </div>
 
                     <!-- TAB: SCHEDULING -->
-                    <div id="tab-scheduling" class="sab-tab-content">
+                    <div id="tab-scheduling" class="simpanbar-tab-content">
                         <h2>Scheduling & Countdown</h2>
                         
                         <h3>Scheduling</h3>
@@ -510,22 +510,22 @@ function sab_options_page() {
                             <tr>
                                 <th scope="row">Enable Scheduling</th>
                                 <td>
-                                    <label class="sab-toggle">
-                                        <input type="checkbox" name="sab_settings[enable_schedule]" id="sab_enable_schedule" value="1" <?php checked( 1, $settings['enable_schedule'] ); ?>>
-                                        <span class="sab-slider"></span>
+                                    <label class="simpanbar-toggle">
+                                        <input type="checkbox" name="simpanbar_settings[enable_schedule]" id="simpanbar_enable_schedule" value="1" <?php checked( 1, $settings['enable_schedule'] ); ?>>
+                                        <span class="simpanbar-slider"></span>
                                     </label>
                                 </td>
                             </tr>
-                            <tr class="sab-conditional" data-show-if="sab_enable_schedule" data-show-val="checked">
+                            <tr class="simpanbar-conditional" data-show-if="sab_enable_schedule" data-show-val="checked">
                                 <th scope="row">Start Date/Time</th>
                                 <td>
-                                    <input type="datetime-local" name="sab_settings[start_date]" value="<?php echo esc_attr( $settings['start_date'] ); ?>">
+                                    <input type="datetime-local" name="simpanbar_settings[start_date]" value="<?php echo esc_attr( $settings['start_date'] ); ?>">
                                 </td>
                             </tr>
-                            <tr class="sab-conditional" data-show-if="sab_enable_schedule" data-show-val="checked">
+                            <tr class="simpanbar-conditional" data-show-if="sab_enable_schedule" data-show-val="checked">
                                 <th scope="row">End Date/Time</th>
                                 <td>
-                                    <input type="datetime-local" name="sab_settings[end_date]" value="<?php echo esc_attr( $settings['end_date'] ); ?>">
+                                    <input type="datetime-local" name="simpanbar_settings[end_date]" value="<?php echo esc_attr( $settings['end_date'] ); ?>">
                                 </td>
                             </tr>
                         </table>
@@ -535,24 +535,24 @@ function sab_options_page() {
                             <tr>
                                 <th scope="row">Enable Countdown</th>
                                 <td>
-                                    <label class="sab-toggle">
-                                        <input type="checkbox" name="sab_settings[enable_countdown]" id="sab_enable_countdown" value="1" <?php checked( 1, $settings['enable_countdown'] ); ?>>
-                                        <span class="sab-slider"></span>
+                                    <label class="simpanbar-toggle">
+                                        <input type="checkbox" name="simpanbar_settings[enable_countdown]" id="simpanbar_enable_countdown" value="1" <?php checked( 1, $settings['enable_countdown'] ); ?>>
+                                        <span class="simpanbar-slider"></span>
                                     </label>
                                 </td>
                             </tr>
-                            <tr class="sab-conditional" data-show-if="sab_enable_countdown" data-show-val="checked">
+                            <tr class="simpanbar-conditional" data-show-if="sab_enable_countdown" data-show-val="checked">
                                 <th scope="row">Target Date/Time</th>
                                 <td>
-                                    <input type="datetime-local" name="sab_settings[countdown_target]" id="sab_countdown_target" value="<?php echo esc_attr( $settings['countdown_target'] ); ?>">
+                                    <input type="datetime-local" name="simpanbar_settings[countdown_target]" id="simpanbar_countdown_target" value="<?php echo esc_attr( $settings['countdown_target'] ); ?>">
                                 </td>
                             </tr>
-                            <tr class="sab-conditional" data-show-if="sab_enable_countdown" data-show-val="checked">
+                            <tr class="simpanbar-conditional" data-show-if="sab_enable_countdown" data-show-val="checked">
                                 <th scope="row">Auto-hide when ended</th>
                                 <td>
-                                    <label class="sab-toggle">
-                                        <input type="checkbox" name="sab_settings[hide_after_countdown]" value="1" <?php checked( 1, $settings['hide_after_countdown'] ); ?>>
-                                        <span class="sab-slider"></span>
+                                    <label class="simpanbar-toggle">
+                                        <input type="checkbox" name="simpanbar_settings[hide_after_countdown]" value="1" <?php checked( 1, $settings['hide_after_countdown'] ); ?>>
+                                        <span class="simpanbar-slider"></span>
                                     </label>
                                 </td>
                             </tr>
