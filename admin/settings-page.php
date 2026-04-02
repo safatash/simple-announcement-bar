@@ -574,5 +574,6 @@ function simpanbar_options_page() {
             </div>
         </div>
     </div>
+    <p class="simpanbar-credit">Created by <a href="https://www.novaadvertising.com" target="_blank" rel="noopener noreferrer">NOVA Advertising</a></p>
     <?php
 }
